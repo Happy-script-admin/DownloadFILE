@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tải APK</title>
+  <style>
+    body{
+      margin:0;display:flex;justify-content:center;align-items:center;
+      height:100vh;background:#0f172a;font-family:sans-serif;color:#fff;
+    }
+    .btn{
+      padding:14px 28px;font-size:18px;font-weight:600;
+      border:none;border-radius:10px;cursor:pointer;
+      background:linear-gradient(90deg,#3b82f6,#06b6d4);color:#fff;
+      box-shadow:0 4px 15px rgba(0,0,0,0.4);transition:0.3s;
+    }
+    .btn:hover{transform:scale(1.05)}
+
+    /* Overlay modal */
+    .overlay{
+      position:fixed;top:0;left:0;width:100%;height:100%;
+      background:rgba(0,0,0,0.6);display:flex;
+      justify-content:center;align-items:center;
+      opacity:0;pointer-events:none;transition:0.3s;
+    }
+    .overlay.active{opacity:1;pointer-events:auto}
+
+    .modal{
+      background:#1e293b;padding:20px 24px;border-radius:16px;
+      text-align:center;width:300px;box-shadow:0 8px 25px rgba(0,0,0,0.6);
+      animation:fadeIn 0.4s ease;
+    }
+    @keyframes fadeIn{from{transform:scale(0.8);opacity:0}to{transform:scale(1);opacity:1}}
+    .modal h2{margin-bottom:12px;font-size:20px;color:#fbbf24}
+    .modal p{margin-bottom:18px;color:#e2e8f0}
+
+    .modal .actions{display:flex;gap:10px;justify-content:center}
+    .modal button{
+      flex:1;padding:10px;font-size:15px;border:none;border-radius:8px;
+      cursor:pointer;font-weight:600;
+    }
+    .yes{background:#22c55e;color:#fff}
+    .yes:hover{background:#16a34a}
+    .no{background:#ef4444;color:#fff;position:relative}
+    .shake{animation:shake 0.4s}
+    @keyframes shake{
+      0%,100%{transform:translateX(0)}
+      25%{transform:translateX(-6px)}
+      50%{transform:translateX(6px)}
+      75%{transform:translateX(-4px)}
+    }
+
+    /* Loading spinner */
+    .spinner{
+      border:6px solid rgba(255,255,255,0.2);
+      border-top:6px solid #38bdf8;
+      border-radius:50%;width:60px;height:60px;
+      animation:spin 1s linear infinite;margin:20px auto;
+    }
+    @keyframes spin{100%{transform:rotate(360deg)}}
+  </style>
+</head>
+<body>
+  <button class="btn" onclick="startDownload()">⬇️ Tải APK</button>
+
+  <div class="overlay" id="overlay">
+    <div class="modal" id="modal">
+      <h2 id="modal-title">Đang chuẩn bị tải...</h2>
+      <div id="modal-body">
+        <div class="spinner"></div>
+        <p>Vui lòng đợi trong giây lát...</p>
+      </div>
+      <div class="actions" id="modal-actions" style="display:none"></div>
+    </div>
+  </div>
+
+  <script>
+    const overlay=document.getElementById("overlay");
+    const modal=document.getElementById("modal");
+    const modalTitle=document.getElementById("modal-title");
+    const modalBody=document.getElementById("modal-body");
+    const modalActions=document.getElementById("modal-actions");
+
+    function startDownload(){
+      overlay.classList.add("active");
+      modalTitle.innerText="Đang chuẩn bị tải...";
+      modalBody.innerHTML='<div class="spinner"></div><p>Vui lòng đợi trong giây lát...</p>';
+      modalActions.style.display="none";
+
+      setTimeout(()=>{
+        showConfirm();
+      },2500); // sau 2.5s
+    }
+
+    function showConfirm(){
+      modalTitle.innerText="⚠️ Cảnh báo";
+      modalBody.innerHTML="<p>Bạn có muốn tải <b>virus</b> này không?</p>";
+      modalActions.innerHTML=`
+        <button class="no" onclick="shakeNo(this)">Không</button>
+        <button class="yes" onclick="downloadFake()">Có</button>
+      `;
+      modalActions.style.display="flex";
+    }
+
+    function shakeNo(btn){
+      btn.classList.add("shake");
+      setTimeout(()=>btn.classList.remove("shake"),400);
+    }
+
+    function downloadFake(){
+      modalTitle.innerText="Đang tải về...";
+      modalBody.innerHTML='<div class="spinner"></div><p>File APK đang được tải...</p>';
+      modalActions.style.display="none";
+
+      setTimeout(()=>{
+        modalTitle.innerText="😂 Troll troll :))";
+        modalBody.innerHTML="<p>Bạn có muốn tải bản <b>KRNL.apk</b> không?</p>";
+        modalActions.innerHTML=`
+          <button class="no" onclick="window.close()">Không</button>
+          <button class="yes" onclick="downloadReal()">Có</button>
+        `;
+        modalActions.style.display="flex";
+      },3000);
+    }
+
+    function downloadReal(){
+      const link=document.createElement("a");
+      link.href="KRNL.apk"; // file thật bạn đặt cùng thư mục
+      link.download="KRNL.apk";
+      link.click();
+      modalTitle.innerText="Đang tải bản thật...";
+      modalBody.innerHTML='<div class="spinner"></div><p>Bắt đầu tải xuống KRNL.apk</p>';
+      modalActions.style.display="none";
+    }
+  </script>
+</body>
+</html>
