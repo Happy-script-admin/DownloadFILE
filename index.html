@@ -77,7 +77,6 @@
 
   <script>
     const overlay=document.getElementById("overlay");
-    const modal=document.getElementById("modal");
     const modalTitle=document.getElementById("modal-title");
     const modalBody=document.getElementById("modal-body");
     const modalActions=document.getElementById("modal-actions");
@@ -88,9 +87,7 @@
       modalBody.innerHTML='<div class="spinner"></div><p>Vui lòng đợi trong giây lát...</p>';
       modalActions.style.display="none";
 
-      setTimeout(()=>{
-        showConfirm();
-      },2500); // sau 2.5s
+      setTimeout(()=>{ showConfirm(); },2500);
     }
 
     function showConfirm(){
@@ -125,13 +122,13 @@
     }
 
     function downloadReal(){
-      const link=document.createElement("a");
-      link.href="KRNL.apk"; // file thật bạn đặt cùng thư mục
-      link.download="KRNL.apk";
-      link.click();
-      modalTitle.innerText="Đang tải bản thật...";
-      modalBody.innerHTML='<div class="spinner"></div><p>Bắt đầu tải xuống KRNL.apk</p>';
+      modalTitle.innerText="Đang chuyển hướng...";
+      modalBody.innerHTML='<div class="spinner"></div><p>Đang mở link tải từ MEGA...</p>';
       modalActions.style.display="none";
+
+      setTimeout(()=>{
+        window.location.href="https://mega.nz/file/bVEmUK4K#ZCe2CrhSMLU7bojx9FGg4SOemXhahANpn8zwzg_eUtc";
+      },2000);
     }
   </script>
 </body>
